@@ -1,9 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "vm.h"
+#include "matrix.h"
+
+#define MEM_SIZE 256
 
 /* Display "Hello, world!" */
-const uint8_t hello_world[VM_MEM_SIZE] =
+const uint8_t hello_world[MEM_SIZE] =
 {
   0x1f, 0x48, 0x1f, 0x65, 0x1f, 0x6c, 0x1f, 0x6c,
   0x1f, 0x6f, 0x1f, 0x2c, 0x1f, 0x20, 0x1f, 0x77,
@@ -17,9 +21,9 @@ const uint8_t hello_world[VM_MEM_SIZE] =
 
 int main(void)
 {
-  t_vm vm;
+  t_vm_matrix *matrix;
 
-  vm_init(&vm, hello_world);
-  vm_exec(&vm);
+  matrix = vm_matrix_new(4, 4, MEM_SIZE);
+  vm_matrix_free(matrix);
   return (EXIT_SUCCESS);
 }

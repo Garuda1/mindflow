@@ -42,7 +42,7 @@ set(SOURCE_FILES
         source/op/stop.c
         source/op/sub.c
         source/op/xor.c
-        )
+        source/matrix.h source/matrix.c source/msg.h)
 
 add_executable(MindFlow ${SOURCE_FILES})
 
