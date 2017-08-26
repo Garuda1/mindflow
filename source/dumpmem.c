@@ -12,6 +12,7 @@ void vm_dumpmem(const t_vm *dxvm)
 {
   size_t x;
   size_t y;
+  size_t i;
 
   puts("--- MEMORY DUMP ---");
   y = 0;
@@ -27,13 +28,11 @@ void vm_dumpmem(const t_vm *dxvm)
     ++y;
   }
   #if VM_DUMPREGS == 1
-  puts("Registers:");
-  printf("%a:  "); tty_putn_hex2(dxvm->reg[0]);
-  printf("\n%b:  "); tty_putn_hex2(dxvm->reg[1]);
-  printf("\n%c:  "); tty_putn_hex2(dxvm->reg[2]);
-  printf("\n%d:  "); tty_putn_hex2(dxvm->reg[3]);
-  printf("\n%sp: "); tty_putn_hex2(dxvm->sp);
-  printf("\n%ip: "); tty_putn_hex2(dxvm->ip);
+  puts("Registers:\n");
+  for (i = 0; i<sizeof(dxvm->reg); ++i)
+    printf("reg[%lu]:  0x%.2X\n", i, dxvm->reg[i]);
+  printf("%%sp: %u", dxvm->sp);
+  printf("%%ip: %u", dxvm->ip);
   #endif
   puts("\n--- MEMORY DUMP ---\n");
 }

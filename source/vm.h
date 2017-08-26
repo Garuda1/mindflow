@@ -13,20 +13,19 @@
 #define VM_STAT_DUMP  0x03 /* Stp the VM and dump memory */
 
 #define VM_DUMPMEM_ENTRIES_PER_LINE 13
-#define VM_DUMPREGS 0 /* vm_dumpmem() dumps the register values when set to 1 */
+#define VM_DUMPREGS 1 /* vm_dumpmem() dumps the register values when set to 1 */
 
-#define VM_MSG_FATALERROR "[VM] The virtual machine encountered a fatal error and cannot continue execution.\n"
+#define VM_MSG_FATALERROR  "[VM] The virtual machine encountered a fatal error and cannot continue execution.\n"
 #define VM_MSG_EXECSTARTED "[VM] Virtual Machine beggining program execution..."
-#define VM_MSG_EXECHALTED "VM execution halted"
-#define VM_MSG_EXECSTOPPED "[DxVM] Execution stopped at cycle %u, dumping memory\n"
-#define VM_MSG_INITIALIZED "VM initialized"
+#define VM_MSG_EXECHALTED  "[VM] Execution halted (stop instruction executed)\n"
+#define VM_MSG_EXECSTOPPED "[VM] Execution stopped at cycle %u, dumping memory\n"
+#define VM_MSG_INITIALIZED "[VM] initialized"
 
 typedef struct s_vm t_vm;
 struct s_vm
 {
   uint8_t ip; /* instruction pointer */
   uint16_t sp; /* Stack pointer. Extended to a 16bits variable to allow the use of the address 0x100 */
-  uint8_t st; /* Status register */
   uint8_t flag : 1; /* Flag register used by comparison instructions */
 
   uint8_t reg[VM_REG_NB]; /* GP registers */
@@ -68,10 +67,11 @@ uint8_t vm_op_inc   (t_vm *dxvm);
 uint8_t vm_op_dec   (t_vm *dxvm);
 uint8_t vm_op_disp  (t_vm *dxvm);
 
-int vm_init(t_vm *vm, const uint8_t *prog);
-int vm_exec(t_vm *vm);
-int vm_load(t_vm *vm, const uint8_t *prog);
-void vm_dumpmem(const t_vm *dxvm);
-extern uint8_t (*vm_op_tab[])(t_vm *);
+int vm_init(t_vm *vm, const uint8_t *prog); /* Initialises a virtual machine */
+int vm_exec1(t_vm *vm);             /* Executes a single instruction in the VM */
+int vm_exec(t_vm *vm);                      /* Execute instructions until the VM stops */
+void vm_dumpmem(const t_vm *dxvm);          /* Dump the memory of a VM to the screen */
+
+extern uint8_t (*vm_op_tab[])(t_vm *);      /* The array containing the op function pointers */
 
 #endif
