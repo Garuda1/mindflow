@@ -57,7 +57,7 @@ uint8_t vm_op_dec   (t_vm *dxvm);
 uint8_t vm_op_disp  (t_vm *dxvm);
 
 t_vm *vm_new(size_t mem_size);           /* Returns a pointer to a newly created VM */
-t_vm *vm_init(t_vm *vm, uint8_t *prog);  /* Initialises a virtual machine */
+t_vm *vm_init(t_vm *vm, const uint8_t *prog);  /* Initialises a virtual machine */
 uint8_t vm_exec1(t_vm *vm);                      /* Executes a single instruction in the VM */
 
 extern uint8_t (*vm_op_tab[])(t_vm *);            /* The array containing the op function pointers */
