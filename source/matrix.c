@@ -51,3 +51,17 @@ t_vm_matrix *vm_matrix_new(const size_t size_x, const size_t size_y, const size_
 
   return (matrix);
 }
+
+void vm_matrix_free(t_vm_matrix *matrix)
+{
+  size_t ix;
+  size_t iy;
+
+  for (ix=0; ix<matrix->size_x; ++ix)
+    for (iy=0; iy<matrix->size_y; ++iy)
+    {
+      free(matrix->vm[ix][iy]->mem);
+      free(matrix->vm[ix][iy]);
+    }
+  free(matrix);
+}

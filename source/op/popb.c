@@ -2,7 +2,7 @@
 
 uint8_t vm_op_popb(t_vm *dxvm)
 {
-  if (dxvm->sp == VM_MEM_SIZE)
+  if (dxvm->sp == sizeof(dxvm->mem))
     return (VM_STAT_FATAL);
   (dxvm->reg)[1] = (dxvm->mem)[(dxvm->sp)];
   ++(dxvm->sp);

@@ -3,6 +3,6 @@
 uint8_t vm_op_push(t_vm *dxvm)
 {
   --(dxvm->sp);
-  (dxvm->mem)[dxvm->sp] = (dxvm->mem)[++(dxvm->ip) % VM_MEM_SIZE];
+  (dxvm->mem)[dxvm->sp] = (dxvm->mem)[++(dxvm->ip) % sizeof(dxvm->mem)];
   return (VM_STAT_RUN);
 }

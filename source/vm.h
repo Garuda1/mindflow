@@ -2,17 +2,13 @@
 #define VM_H_INCLUDED
 
 #include <stdint.h>
+#include <sys/types.h>
 
 #define VM_REG_NB       4  /* 4 registers */
-#define VM_DUMP_CYCLE 128
 
 #define VM_STAT_RUN   0x00 /* Keep the VM running */
 #define VM_STAT_STOP  0x01 /* Stop the VM */
 #define VM_STAT_FATAL 0x02 /* Stop the VM and undergo a kernel panic */
-#define VM_STAT_DUMP  0x03 /* Stp the VM and dump memory */
-
-#define VM_DUMPMEM_ENTRIES_PER_LINE 13
-#define VM_DUMPREGS 1 /* vm_dumpmem() dumps the register values when set to 1 */
 
 typedef struct s_vm t_vm;
 struct s_vm
@@ -24,7 +20,7 @@ struct s_vm
   uint8_t reg[VM_REG_NB]; /* GP registers */
 
   uint8_t *mem; /* memory */
-} __attribute__((packed)); /* Pack the struct to save memory */
+};
 
 /* VM operations */
 uint8_t vm_op_nop   (t_vm *dxvm);
@@ -60,12 +56,10 @@ uint8_t vm_op_inc   (t_vm *dxvm);
 uint8_t vm_op_dec   (t_vm *dxvm);
 uint8_t vm_op_disp  (t_vm *dxvm);
 
-t_vm    *vm_new(const size_t mem_size);          /* Returns a pointer to a newly created VM */
-t_vm    *vm_init(t_vm *vm, const uint8_t *prog); /* Initialises a virtual machine */
+t_vm *vm_new(size_t mem_size);           /* Returns a pointer to a newly created VM */
+t_vm *vm_init(t_vm *vm, uint8_t *prog);  /* Initialises a virtual machine */
 uint8_t vm_exec1(t_vm *vm);                      /* Executes a single instruction in the VM */
-uint8_t vm_exec(t_vm *vm);                       /* Execute instructions until the VM stops */
-void vm_dumpmem(const t_vm *dxvm);               /* Dump the memory of a VM to the screen */
 
-extern uint8_t (*vm_op_tab[])(t_vm *);           /* The array containing the op function pointers */
+extern uint8_t (*vm_op_tab[])(t_vm *);            /* The array containing the op function pointers */
 
 #endif

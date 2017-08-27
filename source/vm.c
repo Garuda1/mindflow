@@ -33,12 +33,12 @@ t_vm *vm_init(t_vm *vm, const uint8_t *prog)
   }
 
   memset((void*)vm, 0, sizeof(t_vm)); /* Zero out the VM and its registers/memory */
-  vm->sp = VM_MEM_SIZE;
+  vm->sp = sizeof(vm->mem);
 
   if (prog == NULL)
     fprintf(stderr, VM_MSG_NULLPROGPTR "(%s:%d)\n", __FILE__, __LINE__);
   else
-    memcpy((char*)(vm->mem), (char*)prog, VM_MEM_SIZE);
+    memcpy((char*)(vm->mem), (char*)prog, sizeof(vm->mem));
 
   puts(VM_MSG_INITIALIZED);
   return (vm);
@@ -53,31 +53,10 @@ uint8_t vm_exec1(t_vm *vm)
   if (vmstat == VM_STAT_FATAL)
     fprintf(stderr, VM_MSG_FATALERROR "(%s:%d)\n", __FILE__, __LINE__);
   ++(vm->ip);              /* Increment the instruction pointer */
-  vm->ip %= VM_MEM_SIZE; /* Increment the instruction pointer */
+  vm->ip %= sizeof(vm->mem); /* Increment the instruction pointer */
 
   if (vmstat == VM_STAT_STOP)
     puts(VM_MSG_EXECHALTED);
 
   return vmstat;
-}
-
-uint8_t vm_exec(t_vm *vm)
-{
-  uint8_t vmstat;
-  uint32_t cycle;
-
-  cycle = 0;
-  puts(VM_MSG_EXECSTARTED);
-  while ((vmstat = vm_exec1(vm)) != VM_STAT_STOP)
-  {
-    if (cycle == VM_DUMP_CYCLE)
-    {
-      fprintf(stderr, VM_MSG_EXECSTOPPED, cycle);
-      vm_dumpmem(vm);
-      vmstat = VM_STAT_DUMP;
-      return (vmstat);
-    }
-    ++cycle;
-  }
-  return (vmstat);
 }

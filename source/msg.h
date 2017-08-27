@@ -6,10 +6,8 @@
 #define MINDFLOW_MSG_H
 
 #define VM_MSG_FATALERROR        "[MindFlow] The virtual machine encountered a fatal error and cannot continue execution."
-#define VM_MSG_EXECSTARTED       "[MindFlow] Virtual Machine beggining program execution..."
 #define VM_MSG_EXECHALTED        "[MindFlow] Execution halted (stop instruction executed)"
-#define VM_MSG_EXECSTOPPED       "[MindFlow] Execution stopped at cycle %u, dumping memory"
-#define VM_MSG_INITIALIZED       "[MindFlow] initialized"
+#define VM_MSG_INITIALIZED       "[MindFlow] initialized a virtual machine"
 #define VM_MSG_MATRIXALLOCFAILED "[MindFlow] Failed to allocate memory for a new cluster"
 #define VM_MSG_NULLVMPTR         "[MindFlow] Provided VM pointer is NULL"
 #define VM_MSG_NULLPROGPTR       "[MindFlow] Provided program pointer is NULL, skipping program loading"

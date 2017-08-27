@@ -8,7 +8,6 @@ set(SOURCE_FILES
         README.md
         source/main.c
         source/vm.c
-        source/dumpmem.c
         source/optab.c
         source/op/add.c
         source/op/and.c
